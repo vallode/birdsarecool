@@ -40,7 +40,7 @@ h2 {
     margin: 0 0 0.5rem 0;
 }
 
-p, a {
+p, a, input, form {
     font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
     line-height: 1rem;
@@ -50,9 +50,63 @@ p, a {
 a {
     text-decoration: none;
     color: #485F6E;
+    transition: all 0.25s ease;
 
     &:hover {
+        color: darken(#485F6E, 30%);
+    }
+}
 
+.upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    input[type="file"] {
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        width: 0.1px;
+        height: 0.1px;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 1.5rem;
+        font-weight: bold;
+        word-break: break-all;
+        margin: 1vh;
+        color: #282828;
+        transition: all 0.25s ease;
+
+        &:hover {
+            color: #9C1A1C;
+        }
+    }
+
+    #submit {
+        border: none;
+        outline: none;
+        background-color: #b41b1d;
+        padding: 1vh;
+        color: #f1f1f1;
+
+        transition: all 0.25s ease;
+
+        &:hover {
+            background-color: darken(#b41b1d, 5%);
+        }
     }
 }
 
@@ -88,7 +142,7 @@ main {
     }
 }
 
-.links {
+.header {
     display: flex;
     flex-direction: column;
     margin: 0 0 1.5rem 0;

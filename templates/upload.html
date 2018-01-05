@@ -3,8 +3,23 @@
 <div class="upload">
     <h2>{{ message }}</h2>
     <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload!">
+        <input type="file" id="file" name="file">
+        <label for="file">
+            Select file...
+        </label>
+        <input type="submit" id="submit" value="Submit">
+        <noscript>
+            <input type="file" name="file">
+            <input type="submit" value="submit">
+        </noscript>
+        <script type="text/javascript">
+            let input = document.querySelector("input[type='file']");
+            let label = document.querySelector("label");
+            input.addEventListener("change", (e) => {
+                let path = input.value.split("\\");
+                label.innerHTML = path[path.length - 1];
+            })
+        </script>
     </form>
 </div>
 {% endblock %}

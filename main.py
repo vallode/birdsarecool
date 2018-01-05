@@ -1,25 +1,27 @@
 from flask import Flask, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
 from hurry.filesize import size, alternative
 from werkzeug.utils import secure_filename
+from flask_bcrypt import Bcrypt
 import random
 import os
 import os.path
 import uuid
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
 image_extensions = set(['png', 'jpg'])
 video_extensions = set(['mp4', 'webm'])
 allowed_extensions = set.union(image_extensions, video_extensions)
+directory = os.listdir("static/birds")
 
 
 def count_directory():
-    directory = os.listdir("static/birds")
+
     count = len(directory)
     return count
 
 
 def count_images():
-    directory = os.listdir("static/birds")
     image_count = 0
 
     for file in directory:
@@ -29,7 +31,6 @@ def count_images():
 
 
 def count_videos():
-    directory = os.listdir("static/birds")
     video_count = 0
 
     for file in directory:
@@ -39,7 +40,6 @@ def count_videos():
 
 
 def return_directory_size():
-    directory = os.listdir("static/birds")
     directory_size = 0
 
     for file in directory:
@@ -52,8 +52,6 @@ def return_directory_size():
 
 
 def random_bird():
-    directory = os.listdir("static/birds")
-
     r = random.randrange(0, len(directory))
     return directory[r]
 
@@ -115,6 +113,15 @@ def upload():
         return render_template("upload.html", **locals())
     if request.method == "GET":
         return render_template("upload.html", **locals())
+
+
+@app.route("/review", methods=["GET", "POST"])
+def review():
+    if request.method == "POST":
+        return render_template("index.html", **locals())
+
+    if request.method == "GET":
+        return render_template("index.html", **locals())
 
 
 @app.route("/bird.json")
