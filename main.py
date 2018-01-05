@@ -1,9 +1,15 @@
-from flask import Flask, request, send_from_directory, render_template, redirect, jsonify, url_for
+from flask import Flask, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
 from hurry.filesize import size, alternative
+from werkzeug.utils import secure_filename
 import random
 import os
 import os.path
+import uuid
 app = Flask(__name__)
+
+image_extensions = set(['png', 'jpg'])
+video_extensions = set(['mp4', 'webm'])
+allowed_extensions = set.union(image_extensions, video_extensions)
 
 
 def count_directory():
@@ -17,7 +23,7 @@ def count_images():
     image_count = 0
 
     for file in directory:
-        if file.split(".")[1] == 'png':
+        if file.split(".")[1] in image_extensions:
             image_count += 1
     return image_count
 
@@ -27,7 +33,7 @@ def count_videos():
     video_count = 0
 
     for file in directory:
-        if file.split(".")[1] == 'mp4':
+        if file.split(".")[1] in video_extensions:
             video_count += 1
     return video_count
 
@@ -52,6 +58,10 @@ def random_bird():
     return directory[r]
 
 
+def allowed_file(filename):
+    return "." in filename and filename.split(".")[-1].lower() in allowed_extensions
+
+
 @app.route("/")
 def index():
     image, video = False, False
@@ -61,7 +71,7 @@ def index():
     storage_size = return_directory_size()
 
     current_bird = random_bird()
-    bird_path = f"static/birds/{current_bird}"
+    bird_path = f"{request.url_root}{current_bird}"
     file_type = current_bird.split(".")[1]
 
     if file_type == "mp4":
@@ -69,13 +79,48 @@ def index():
     else:
         image = True
 
-    return render_template('index.html', **locals())
+    return render_template("index.html", **locals())
 
 
-@app.route("/bird")
+@app.route("/<path:path>", methods=['GET'])
+def return_bird(path):
+    return send_from_directory("static/birds", path.split("/")[-1])
+
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    if request.method == "POST":
+        if "file" not in request.files:
+            print(request.files)
+            message = "No file found"
+            return render_template("upload.html", **locals())
+
+        file = request.files["file"]
+
+        if file.filename == "":
+            print(file)
+            message = "No file found"
+            return render_template("upload.html", **locals())
+
+        if file and allowed_file(file.filename):
+            print(file)
+            filename = secure_filename(file.filename)
+            filename = f"{uuid.uuid4()}.{filename.split('.')[-1]}"
+            print(filename)
+
+            file.save(os.path.join("review_birds/", filename))
+            message = "File uploaded successfully!"
+            return render_template("upload.html", **locals())
+
+        return render_template("upload.html", **locals())
+    if request.method == "GET":
+        return render_template("upload.html", **locals())
+
+
+@app.route("/bird.json")
 def bird():
     bird_object = {
-        'url': f"static/birds/{random_bird()}"
+        'url': f"{request.url_root}{random_bird()}"
     }
     return jsonify(bird_object)
 

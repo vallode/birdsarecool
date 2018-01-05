@@ -1,35 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Birds are cool!</title>
-    <meta name="description" content="For all your random bird needs">
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans|Dosis:400,800" rel="stylesheet" type="text/css" />
-</head>
-<body>
-    <main>
-        <div class="links">
-            <a href="{{ url_for('index') }}"><h1>Birds are cool!</h1></a>
-            <ul>
-                <li><a href="{{ url_for('bird') }}">Random Bird</a></li>
-                <li><a href="https://github.com/vallode">Github</a></li>
-                <li><a href="{{ url_for('bird') }}">Upload</a></li>
-            </ul>
-        </div>
-        {% if video %}
-        <video src="{{ bird_path }}" autoplay controls></video>
-        {% else %}
-        <a href="{{ bird_path }}"><img src="{{ bird_path  }}" alt="bird image"></a>
-        {% endif %}
-        <div class="info">
-            <p>We currently house <span>{{ bird_count }}</span> {% if bird_count > 1 %} birds! {% else %} very special bird! {% endif %}</p>
-            <p>The birds eat <span>{{ storage_size }}</span> of seed</p>
-            <p><span>{{ bird_image_count }}</span>{% if bird_image_count > 1 %} of our birds are images{% else %} bird is an image{% endif %}</p>
-            <p><span>{{ bird_video_count }}</span>{% if bird_video_count > 1 %} of our birds prefer{% else %} bird prefers{% endif %} to dance!</p>
-        </div>
-    </main>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body %}
+{% if video %}
+<video src="{{ bird_path }}" autoplay controls></video>
+{% else %}
+<a href="{{ bird_path }}"><img src="{{ bird_path  }}" alt="bird image"></a>
+{% endif %}
+<div class="info">
+    <p>We currently house <span>{{ bird_count }}</span> {% if bird_count > 1 %} birds! {% else %} very special bird! {% endif %}</p>
+    <p>The birds eat <span>{{ storage_size }}</span> of seed</p>
+    <p><span>{{ bird_image_count }}</span>{% if bird_image_count > 1 %} of our birds are images{% else %} bird is an image{% endif %}</p>
+    <p><span>{{ bird_video_count }}</span>{% if bird_video_count > 1 %} of our birds prefer{% else %} bird prefers{% endif %} to dance!</p>
+</div>
+{% endblock %}

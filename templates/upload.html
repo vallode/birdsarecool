@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="upload">
+    <h2>{{ message }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="Upload!">
+    </form>
+</div>
+{% endblock %}

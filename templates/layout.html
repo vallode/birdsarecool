@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Birds are cool!</title>
+    <meta name="description" content="For all your random bird needs">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans|Dosis:400,800" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<main>
+    <div class="links">
+        <a href="{{ url_for('index') }}"><h1>Birds are cool!</h1></a>
+        <ul>
+            <li><a href="{{ url_for('bird') }}">Bird.json</a></li>
+            <li><a href="https://github.com/vallode">Github</a></li>
+            <li><a href="{{ url_for('upload') }}">Upload</a></li>
+        </ul>
+    </div>
+    {% block body %}
+    {% endblock %}
+</main>
+</body>
+</html>
