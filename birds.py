@@ -131,7 +131,10 @@ def index():
 
 @app.route("/<path:path>", methods=['GET'])
 def return_bird(path):
-    return send_from_directory("static/birds", path.split("/")[-1])
+    try:
+        return send_from_directory("static/birds", path.split("/")[-1])
+    except:
+        abort(404)
 
 
 @app.route("/review_birds/<path:path>", methods=['GET'])
@@ -245,4 +248,4 @@ def bird():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')
