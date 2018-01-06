@@ -64,11 +64,19 @@ def random_bird(directory):
     return directory[r]
 
 
+def allowed_file(filename):
+    return "." in filename and filename.split(".")[-1].lower() in allowed_extensions
+
+
+def shrink_file(file):
+    api.shrink_file(file, api_key=TINY, out_filepath=file)
+
+
 def stats():
+    options = dict()
     birds_folder = os.listdir("static/birds")
     birds_review_folder = os.listdir("review_birds")
 
-    options = dict()
     video = False
     video_review = False
     bird_image_count = 0
@@ -90,7 +98,6 @@ def stats():
     if bird_review_count:
         review_bird = random_bird(birds_review_folder)
         bird_review_path = f"{request.url_root}review_birds/{review_bird}"
-        bird_review_size = f"{request.url_root}review_birds/{review_bird}"
         file_type_review = review_bird.split(".")[1]
 
         if file_type_review.lower() in video_extensions:
@@ -103,17 +110,9 @@ def stats():
     return options
 
 
-def allowed_file(filename):
-    return "." in filename and filename.split(".")[-1].lower() in allowed_extensions
-
-
-def shrink_file(file):
-    api.shrink_file(file, api_key=TINY, out_filepath=file)
-
-
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return 'Sorry, we could not find any birds for you!', 404
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -142,34 +141,33 @@ def return_review_bird(path):
 def upload():
     options = stats()
     options.update({'page_title': 'upload'})
-    if request.method == "POST":
-        if "file" not in request.files:
-            message = "No file found"
-            return render_template("upload.html", **locals())
-
-        file = request.files["file"]
-
-        if file.filename == "":
-            message = "No file found"
-            return render_template("upload.html", **locals())
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filename = f"{uuid.uuid4()}.{filename.split('.')[-1].lower()}"
-            pathname = os.path.join("review_birds/", filename)
-
-            file.save(pathname)
-
-            file_type = file.filename.split(".")[-1]
-            if file_type.lower() in image_extensions:
-                shrink = Thread(target=shrink_file, args=(pathname,))
-                shrink.start()
-
-            options.update({"bird_review_count": count_directory("review_birds")})
-            message = "File uploaded successfully!"
-            return render_template("upload.html", **locals())
-
+    if "file" not in request.files:
+        message = "No file found"
         return render_template("upload.html", **locals())
+
+    file = request.files["file"]
+
+    if file.filename == "":
+        message = "No file found"
+        return render_template("upload.html", **locals())
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        filename = f"{uuid.uuid4()}.{filename.split('.')[-1].lower()}"
+        pathname = os.path.join("review_birds/", filename)
+
+        file.save(pathname)
+
+        file_type = file.filename.split(".")[-1]
+        if file_type.lower() in image_extensions:
+            shrink = Thread(target=shrink_file, args=(pathname,))
+            shrink.start()
+
+        options.update({"bird_review_count": count_directory("review_birds")})
+        message = "File uploaded successfully!"
+        return render_template("upload.html", **locals())
+
+    return render_template("upload.html", **locals())
 
 
 @app.route("/upload", methods=["GET"])
