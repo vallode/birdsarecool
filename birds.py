@@ -27,8 +27,10 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 allowed_extensions = set.union(image_extensions, video_extensions)
 
 
-def count_directory(directory):
+def count_directory(path):
+    directory = os.listdir(path)
     count = len(directory)
+
     return count
 
 
@@ -39,6 +41,7 @@ def count_images():
     for file in birds_folder:
         if file.split(".")[1].lower() in image_extensions:
             image_count += 1
+
     return image_count
 
 
@@ -49,6 +52,7 @@ def count_videos():
     for file in birds_folder:
         if file.split(".")[1].lower() in video_extensions:
             video_count += 1
+
     return video_count
 
 
@@ -62,6 +66,7 @@ def return_directory_size():
         directory_size += file_size
 
     directory_size = size(directory_size, system=alternative)
+
     return directory_size
 
 
@@ -75,7 +80,7 @@ def stats():
     bird_image_count = 0
     bird_video_count = 0
 
-    bird_count = count_directory(birds_folder)
+    bird_count = count_directory("static/birds")
     if bird_count:
         bird_image_count = count_images()
         bird_video_count = count_videos()
@@ -87,7 +92,7 @@ def stats():
         if file_type.lower() in video_extensions:
             video = True
 
-    bird_review_count = count_directory(birds_review_folder)
+    bird_review_count = count_directory("review_birds")
     if bird_review_count:
         review_bird = random_bird(birds_review_folder)
         bird_review_path = f"{request.url_root}review_birds/{review_bird}"
@@ -100,11 +105,13 @@ def stats():
     storage_size = return_directory_size()
 
     options.update(**locals())
+
     return options
 
 
 def random_bird(directory):
     r = random.randrange(0, len(directory))
+
     return directory[r]
 
 
@@ -170,7 +177,7 @@ def upload():
                 shrink = Thread(target=shrink_file, args=(pathname,))
                 shrink.start()
 
-            options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
+            options.update({"bird_review_count": count_directory("review_birds")})
             message = "File uploaded successfully!"
             return render_template("upload.html", **locals())
 
@@ -210,7 +217,7 @@ def review():
                 shrink = Thread(target=shrink_file, args=(path,))
                 shrink.start()
 
-            options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
+            options.update({"bird_review_count": count_directory("review_birds")})
             app.logger.info('Housed bird: %s', image_name)
 
         if "Remove" in request.form:
@@ -219,7 +226,7 @@ def review():
 
             os.remove(f"review_birds/{image_name}")
 
-            options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
+            options.update({"bird_review_count": count_directory("review_birds")})
             app.logger.info('Removed bird: %s', image_name)
 
         return render_template("review.html", **locals())
