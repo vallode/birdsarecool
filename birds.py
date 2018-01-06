@@ -141,6 +141,8 @@ def return_review_bird(path):
 def upload():
     options = stats()
     options.update({'page_title': 'upload'})
+    free_storage = os.statvfs("/").f_frsize * os.statvfs("/").f_bfree
+
     if "file" not in request.files:
         message = "No file found"
         return render_template("upload.html", **locals())
@@ -149,6 +151,10 @@ def upload():
 
     if file.filename == "":
         message = "No file found"
+        return render_template("upload.html", **locals())
+
+    if file and free_storage / 1.074e+9 < 1:
+        message = "We are out of space for birds!"
         return render_template("upload.html", **locals())
 
     if file and allowed_file(file.filename):
