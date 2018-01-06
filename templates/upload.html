@@ -26,7 +26,11 @@
             let label = document.querySelector("label");
             input.addEventListener("change", (e) => {
                 let path = input.value.split("\\");
-                label.innerHTML = path[path.length - 1];
+                if(path[0] === "") {
+                    label.innerHTML = "Select file...";
+                } else {
+                    label.innerHTML = path[path.length - 1];
+                }
             })
         </script>
     </form>
