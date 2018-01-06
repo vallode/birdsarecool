@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
+from flask import Flask, abort, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
 from hurry.filesize import size, alternative
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
@@ -100,6 +100,11 @@ def allowed_file(filename):
     return "." in filename and filename.split(".")[-1].lower() in allowed_extensions
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     options = stats()
@@ -186,10 +191,14 @@ def review():
 
 @app.route("/bird.json")
 def bird():
-    bird_object = {
-        'url': f"{request.url_root}{random_bird()}"
-    }
-    return jsonify(bird_object)
+    birds_folder = os.listdir("static/birds")
+    try:
+        bird_object = {
+            'url': f"{request.url_root}{random_bird(birds_folder)}"
+        }
+        return jsonify(bird_object)
+    except ValueError:
+        abort(404)
 
 
 if __name__ == '__main__':
