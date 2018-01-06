@@ -143,7 +143,7 @@ def return_review_bird(path):
 
 
 @app.route("/upload", methods=["POST"])
-@limiter.limit("10 per day")
+@limiter.limit("10 per day", error_message="We cannot take this many birds from you!")
 def upload():
     options = stats()
     options.update({'page_title': 'upload'})
