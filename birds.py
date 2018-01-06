@@ -2,11 +2,14 @@ from flask import Flask, abort, request, send_from_directory, render_template, r
 from hurry.filesize import size, alternative
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
-from secret import SECRET
+from secret import SECRET, TINY
 import random
 import os
 import os.path
 import uuid
+from threading import Thread
+from tinypng import api
+
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
@@ -86,7 +89,6 @@ def stats():
             video_review = True
 
     storage_size = return_directory_size()
-    print(storage_size)
 
     options.update(**locals())
     return options
@@ -99,6 +101,12 @@ def random_bird(directory):
 
 def allowed_file(filename):
     return "." in filename and filename.split(".")[-1].lower() in allowed_extensions
+
+
+def shrink_file(file):
+    print('Shrinking')
+    api.shrink_file(file, api_key=TINY, out_filepath=file)
+    print('Shrunk!')
 
 
 @app.errorhandler(404)
@@ -140,8 +148,15 @@ def upload():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             filename = f"{uuid.uuid4()}.{filename.split('.')[-1]}"
+            pathname = os.path.join("review_birds/", filename)
 
-            file.save(os.path.join("review_birds/", filename))
+            file.save(pathname)
+
+            file_type = file.filename.split(".")[-1]
+            if file_type in image_extensions:
+                shrink = Thread(target=shrink_file, args=(pathname,))
+                shrink.start()
+
             options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
             message = "File uploaded successfully!"
             return render_template("upload.html", **locals())
