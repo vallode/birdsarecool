@@ -1,4 +1,6 @@
 from flask import Flask, abort, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from hurry.filesize import size, alternative
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
@@ -13,8 +15,15 @@ from tinypng import api
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["4000 per day", "150 per hour"]
+)
+
 image_extensions = set(['png', 'jpg'])
 video_extensions = set(['mp4', 'webm', 'gif'])
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 allowed_extensions = set.union(image_extensions, video_extensions)
 
 
@@ -130,7 +139,8 @@ def return_review_bird(path):
     return send_from_directory("review_birds/", path.split("/")[-1])
 
 
-@app.route("/upload", methods=["GET", "POST"])
+@app.route("/upload", methods=["POST"])
+@limiter.limit("10 per day")
 def upload():
     options = stats()
     options.update({'page_title': 'upload'})
@@ -162,8 +172,13 @@ def upload():
             return render_template("upload.html", **locals())
 
         return render_template("upload.html", **locals())
-    if request.method == "GET":
-        return render_template("upload.html", **locals())
+
+
+@app.route("/upload", methods=["GET"])
+def upload_get():
+    options = stats()
+    options.update({'page_title': 'upload'})
+    return render_template("upload.html", **locals())
 
 
 @app.route("/review", methods=["GET", "POST"])
@@ -213,6 +228,7 @@ def review():
 
 
 @app.route("/bird.json")
+@limiter.limit("500 per hour", error_message="The birds are resting!)")
 def bird():
     birds_folder = os.listdir("static/birds")
     try:

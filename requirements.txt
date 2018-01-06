@@ -6,10 +6,12 @@ click==6.7
 docopt==0.6.2
 Flask==0.12.2
 Flask-Bcrypt==0.7.1
+Flask-Limiter==1.0.1
 hurry.filesize==0.9
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
+limits==1.2.1
 MarkupSafe==1.0
 pycparser==2.18
 requests==2.18.4
