@@ -60,15 +60,10 @@ a {
 .upload {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     input[type="file"] {
         opacity: 0;
@@ -82,11 +77,10 @@ form {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
         min-height: 1.5rem;
         font-weight: bold;
         word-break: break-all;
-        margin: 1vh;
+        margin: 1vh 0 1vh 0;
         color: #282828;
         transition: all 0.25s ease;
 
@@ -95,7 +89,7 @@ form {
         }
     }
 
-    #submit {
+    input[type="submit"] {
         border: none;
         outline: none;
         background-color: #b41b1d;
@@ -157,6 +151,42 @@ main {
 
         li {
             margin: 0 1rem 0 0;
+        }
+    }
+}
+
+.review {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        margin: 0;
+        padding: 1vh;
+        border: none;
+        outline: 0;
+
+        color: #f1f1f1;
+        background-color: #b41b1d;
+
+        transition: all 0.25s ease;
+
+        &:hover {
+            background-color: darken(#b41b1d, 5%);
+        }
+    }
+
+    .options {
+        display: flex;
+        justify-content: space-around;
+
+        form {
+            margin: 1vh;
+        }
+
+        input[type="text"] {
+            display: none;
         }
     }
 }

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="review">
+    {% if options.bird_review_count > 0 %}
+    <h2>{{ message }}</h2>
+    {% if options.video_review %}
+    <video src="{{ options.bird_review_path }}" autoplay controls></video>
+    {% else %}
+    <a href="{{ options.bird_review_path }}"><img src="{{ options.bird_review_path }}" alt="bird image"></a>
+    {% endif %}
+    <div class="options">
+        <form method="post" action="" enctype="multipart/form-data">
+            <input type="text" name="House" value="{{ options.bird_review_path }}">
+            <input type="submit" value="House">
+        </form>
+        <form method="post" action="" enctype="multipart/form-data">
+            <input type="text" name="Remove" value="{{ options.bird_review_path }}">
+            <input type="submit" value="Remove">
+        </form>
+    </div>
+    {% else %}
+    <h2>No birds to review! ;(</h2>
+    {% endif %}
+</div>
+{% endblock %}

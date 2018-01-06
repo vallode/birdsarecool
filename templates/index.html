@@ -1,14 +1,29 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if video %}
-<video src="{{ bird_path }}" autoplay controls></video>
+{% if options.bird_image_count > 0 %}
+    {% if options.video %}
+        <video src="{{ options.bird_path }}" autoplay controls></video>
+    {% else %}
+        <a href="{{ options.bird_path }}"><img src="{{ options.bird_path }}" alt="bird image"></a>
+    {% endif %}
 {% else %}
-<a href="{{ bird_path }}"><img src="{{ bird_path  }}" alt="bird image"></a>
+    <h2>We have no birds ;(</h2>
 {% endif %}
 <div class="info">
-    <p>We currently house <span>{{ bird_count }}</span> {% if bird_count > 1 %} birds! {% else %} very special bird! {% endif %}</p>
-    <p>The birds eat <span>{{ storage_size }}</span> of seed</p>
-    <p><span>{{ bird_image_count }}</span>{% if bird_image_count > 1 %} of our birds are images{% else %} bird is an image{% endif %}</p>
-    <p><span>{{ bird_video_count }}</span>{% if bird_video_count > 1 %} of our birds prefer{% else %} bird prefers{% endif %} to dance!</p>
+    <p>
+        We currently house <span>{{ options.bird_count }}</span>
+        {% if options.bird_count > 1 %} birds! {% else %} very special bird! {% endif %}
+    </p>
+    <p>
+        The birds eat <span>{% if options.storage_size == "0 bytes" %}nothing ;({% else %}{{ options.storage_size }}</span> of seed{% endif %}
+    </p>
+    <p>
+        <span>{{ options.bird_image_count }}</span>
+        {% if options.bird_image_count > 1 or options.bird_image_count == 0 %} of our birds are images{% else %} bird is an image{% endif %}
+    </p>
+    <p>
+        <span>{{ options.bird_video_count }}</span>
+        {% if options.bird_video_count > 1 or options.bird_video_count == 0 %} of our birds prefer{% else %} bird prefers{% endif %} to dance!
+    </p>
 </div>
 {% endblock %}
