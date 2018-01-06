@@ -22,7 +22,7 @@ limiter = Limiter(
 )
 
 image_extensions = set(['png', 'jpg'])
-video_extensions = set(['mp4', 'webm', 'gif'])
+video_extensions = set(['mp4', 'webm', 'gif', 'gifv'])
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 allowed_extensions = set.union(image_extensions, video_extensions)
 
