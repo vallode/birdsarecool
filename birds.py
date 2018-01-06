@@ -194,11 +194,15 @@ def bird():
     birds_folder = os.listdir("static/birds")
     try:
         bird_object = {
+            'status': 'Success',
             'url': f"{request.url_root}{random_bird(birds_folder)}"
         }
         return jsonify(bird_object)
     except ValueError:
-        abort(404)
+        bird_object = {
+            'status': 'Failed',
+        }
+        return jsonify(bird_object)
 
 
 if __name__ == '__main__':
