@@ -37,7 +37,7 @@ def count_images():
     image_count = 0
 
     for file in birds_folder:
-        if file.split(".")[1] in image_extensions:
+        if file.split(".")[1].lower() in image_extensions:
             image_count += 1
     return image_count
 
@@ -47,7 +47,7 @@ def count_videos():
     video_count = 0
 
     for file in birds_folder:
-        if file.split(".")[1] in video_extensions:
+        if file.split(".")[1].lower() in video_extensions:
             video_count += 1
     return video_count
 
@@ -160,7 +160,7 @@ def upload():
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filename = f"{uuid.uuid4()}.{filename.split('.')[-1]}"
+            filename = f"{uuid.uuid4()}.{filename.split('.')[-1].lower()}"
             pathname = os.path.join("review_birds/", filename)
 
             file.save(pathname)
