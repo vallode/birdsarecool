@@ -21,10 +21,10 @@ limiter = Limiter(
     default_limits=["4000 per day", "150 per hour"]
 )
 
-image_extensions = set(['png', 'jpg'])
-video_extensions = set(['mp4', 'webm'])
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+image_extensions = {'png', 'jpg'}
+video_extensions = {'mp4', 'webm'}
 allowed_extensions = set.union(image_extensions, video_extensions)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 def count_directory(path):
@@ -34,26 +34,15 @@ def count_directory(path):
     return count
 
 
-def count_images():
-    birds_folder = os.listdir("static/birds")
-    image_count = 0
+def count_file_type(path, extension):
+    birds_folder = os.listdir(path)
+    count = 0
 
     for file in birds_folder:
-        if file.split(".")[1].lower() in image_extensions:
-            image_count += 1
+        if file.split(".")[1] in extension:
+            count += 1
 
-    return image_count
-
-
-def count_videos():
-    birds_folder = os.listdir("static/birds")
-    video_count = 0
-
-    for file in birds_folder:
-        if file.split(".")[1].lower() in video_extensions:
-            video_count += 1
-
-    return video_count
+    return count
 
 
 def return_directory_size():
@@ -70,6 +59,12 @@ def return_directory_size():
     return directory_size
 
 
+def random_bird(directory):
+    r = random.randrange(0, len(directory))
+
+    return directory[r]
+
+
 def stats():
     birds_folder = os.listdir("static/birds")
     birds_review_folder = os.listdir("review_birds")
@@ -82,8 +77,8 @@ def stats():
 
     bird_count = count_directory("static/birds")
     if bird_count:
-        bird_image_count = count_images()
-        bird_video_count = count_videos()
+        bird_image_count = count_file_type("static/birds", image_extensions)
+        bird_video_count = count_file_type("static/birds", video_extensions)
 
         current_bird = random_bird(birds_folder)
         bird_path = f"{request.url_root}{current_bird}"
@@ -107,12 +102,6 @@ def stats():
     options.update(**locals())
 
     return options
-
-
-def random_bird(directory):
-    r = random.randrange(0, len(directory))
-
-    return directory[r]
 
 
 def allowed_file(filename):
