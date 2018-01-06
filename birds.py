@@ -104,9 +104,7 @@ def allowed_file(filename):
 
 
 def shrink_file(file):
-    print('Shrinking')
     api.shrink_file(file, api_key=TINY, out_filepath=file)
-    print('Shrunk!')
 
 
 @app.errorhandler(404)
@@ -186,6 +184,13 @@ def review():
             image_name = image.split("/")[-1]
 
             os.rename(f"review_birds/{image_name}", f"static/birds/{image_name}")
+
+            path = os.path.join(f"static/birds/{image_name}")
+
+            file_type = image_name.split(".")[-1]
+            if file_type in image_extensions:
+                shrink = Thread(target=shrink_file, args=(path,))
+                shrink.start()
 
             options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
             print(f"Housed bird {image_name}!")
