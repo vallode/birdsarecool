@@ -12,18 +12,22 @@
 <div class="info">
     <p>
         We currently house <span>{{ options.bird_count }}</span>
-        {% if options.bird_count > 1 or options.bird_count == 0 %} birds! {% else %} very special bird! {% endif %}
+        {% if options.bird_count > 1 or options.bird_count == 0 %} birds!
+        {% else %} very special bird! {% endif %}
     </p>
     <p>
-        The birds eat <span>{% if options.storage_size == "0 bytes" %}nothing ;({% else %}{{ options.storage_size }}</span> of seed{% endif %}
+        The birds eat <span>{% if options.storage_size == "0 bytes" %}nothing ;(
+        {% else %}{{ options.storage_size }}</span> of seed{% endif %}
     </p>
     <p>
         <span>{{ options.bird_image_count }}</span>
-        {% if options.bird_image_count > 1 or options.bird_image_count == 0 %} of our birds are images{% else %} bird is an image{% endif %}
+        {% if options.bird_image_count > 1 or options.bird_image_count == 0 %} of our birds are images
+        { % else %} bird is an image{% endif %}
     </p>
     <p>
         <span>{{ options.bird_video_count }}</span>
-        {% if options.bird_video_count > 1 or options.bird_video_count == 0 %} of our birds prefer{% else %} bird prefers{% endif %} to dance!
+        {% if options.bird_video_count > 1 or options.bird_video_count == 0 %} of our birds prefer
+        {% else %} bird prefers{% endif %} to dance!
     </p>
 </div>
 {% endblock %}
