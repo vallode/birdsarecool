@@ -45,18 +45,17 @@ def count_file_type(path, extension):
     return count
 
 
-def return_directory_size():
-    birds_folder = os.listdir("static/birds")
-    directory_size = 0
+def count_directory_size(path):
+    folder = os.listdir(path)
+    folder_size = 0
 
-    for file in birds_folder:
+    for file in folder:
         pathname = os.path.join("static/birds", file)
-        file_size = os.stat(pathname).st_size
-        directory_size += file_size
+        folder_size += os.stat(pathname).st_size
 
-    directory_size = size(directory_size, system=alternative)
+    folder_size = size(folder_size, system=alternative)
 
-    return directory_size
+    return folder_size
 
 
 def random_bird(directory):
@@ -97,7 +96,7 @@ def stats():
         if file_type_review.lower() in video_extensions:
             video_review = True
 
-    storage_size = return_directory_size()
+    storage_size = count_directory_size("static/birds")
 
     options.update(**locals())
 
