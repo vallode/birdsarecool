@@ -22,7 +22,7 @@ limiter = Limiter(
 )
 
 image_extensions = set(['png', 'jpg'])
-video_extensions = set(['mp4', 'webm', 'gif', 'gifv'])
+video_extensions = set(['mp4', 'webm'])
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 allowed_extensions = set.union(image_extensions, video_extensions)
 
@@ -84,7 +84,7 @@ def stats():
         bird_path = f"{request.url_root}{current_bird}"
         file_type = current_bird.split(".")[1]
 
-        if file_type in video_extensions:
+        if file_type.lower() in video_extensions:
             video = True
 
     bird_review_count = count_directory(birds_review_folder)
@@ -94,7 +94,7 @@ def stats():
         bird_review_size = f"{request.url_root}review_birds/{review_bird}"
         file_type_review = review_bird.split(".")[1]
 
-        if file_type_review in video_extensions:
+        if file_type_review.lower() in video_extensions:
             video_review = True
 
     storage_size = return_directory_size()
@@ -166,7 +166,7 @@ def upload():
             file.save(pathname)
 
             file_type = file.filename.split(".")[-1]
-            if file_type in image_extensions:
+            if file_type.lower() in image_extensions:
                 shrink = Thread(target=shrink_file, args=(pathname,))
                 shrink.start()
 
