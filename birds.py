@@ -181,6 +181,7 @@ def upload():
 def upload_get():
     options = stats()
     options.update({'page_title': 'upload'})
+
     return render_template("upload.html", **locals())
 
 
@@ -189,11 +190,10 @@ def review():
     options = stats()
 
     if request.args.get('seed') and bcrypt.check_password_hash(SECRET, request.args.get('seed')):
-        print('Auth successful!')
-        print(f'Logged from: {request.remote_addr}')
+        app.logger.info('Auth successful! %s', request.remote_addr)
     else:
-        print('Auth failed...')
-        print(f'Logged from: {request.remote_addr}')
+        app.logger.info('Auth failed... %s', request.remote_addr)
+
         return redirect(url_for("index"))
 
     if request.method == "POST":
@@ -211,7 +211,7 @@ def review():
                 shrink.start()
 
             options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
-            print(f"Housed bird {image_name}!")
+            app.logger.info('Housed bird: %s', image_name)
 
         if "Remove" in request.form:
             image = request.form["Remove"]
@@ -220,7 +220,7 @@ def review():
             os.remove(f"review_birds/{image_name}")
 
             options.update({"bird_review_count": count_directory(os.listdir("review_birds"))})
-            print(f"Removed bad bird {image_name}!")
+            app.logger.info('Removed bird: %s', image_name)
 
         return render_template("review.html", **locals())
 
