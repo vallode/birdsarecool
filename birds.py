@@ -127,6 +127,7 @@ def index():
 @app.route("/<path:path>", methods=['GET'])
 def return_bird(path):
     try:
+        path.close()
         return send_from_directory("static/birds", path.split("/")[-1])
     except:
         abort(404)
@@ -172,6 +173,7 @@ def upload():
 
         options.update({"bird_review_count": count_directory("review_birds")})
         message = "File uploaded successfully!"
+
         return render_template("upload.html", **locals())
 
     return render_template("upload.html", **locals())
@@ -185,7 +187,7 @@ def upload_get():
     return render_template("upload.html", **locals())
 
 
-@app.route("/review", methods=["GET", "POST"])
+@app.route("/review", methods=["POST"])
 def review():
     options = stats()
 
@@ -196,38 +198,46 @@ def review():
 
         return redirect(url_for("index"))
 
-    if request.method == "POST":
-        if "House" in request.form:
-            image = request.form["House"]
-            image_name = image.split("/")[-1]
+    if "House" in request.form:
+        image = request.form["House"]
+        image_name = image.split("/")[-1]
 
-            os.rename(f"review_birds/{image_name}", f"static/birds/{image_name}")
+        os.rename(f"review_birds/{image_name}", f"static/birds/{image_name}")
 
-            path = os.path.join(f"static/birds/{image_name}")
+        path = os.path.join(f"static/birds/{image_name}")
 
-            file_type = image_name.split(".")[-1]
-            if file_type in image_extensions:
-                shrink = Thread(target=shrink_file, args=(path,))
-                shrink.start()
+        file_type = image_name.split(".")[-1]
+        if file_type in image_extensions:
+            shrink = Thread(target=shrink_file, args=(path,))
+            shrink.start()
 
-            options.update({"bird_review_count": count_directory("review_birds")})
-            app.logger.info('Housed bird: %s', image_name)
+        options.update({"bird_review_count": count_directory("review_birds")})
+        app.logger.info('Housed bird: %s', image_name)
 
-        if "Remove" in request.form:
-            image = request.form["Remove"]
-            image_name = image.split("/")[-1]
+    if "Remove" in request.form:
+        image = request.form["Remove"]
+        image_name = image.split("/")[-1]
 
-            os.remove(f"review_birds/{image_name}")
+        os.remove(f"review_birds/{image_name}")
 
-            options.update({"bird_review_count": count_directory("review_birds")})
-            app.logger.info('Removed bird: %s', image_name)
+        options.update({"bird_review_count": count_directory("review_birds")})
+        app.logger.info('Removed bird: %s', image_name)
 
-        return render_template("review.html", **locals())
+    return render_template("review.html", **locals())
 
-    if request.method == "GET":
-        return render_template("review.html", **locals())
 
-    return redirect(url_for("index"))
+@app.route("/review", methods=["GET"])
+def review_get():
+    options = stats()
+
+    if request.args.get('seed') and bcrypt.check_password_hash(SECRET, request.args.get('seed')):
+        app.logger.info('Auth successful! %s', request.remote_addr)
+    else:
+        app.logger.info('Auth failed... %s', request.remote_addr)
+
+        return redirect(url_for("index"))
+
+    return render_template("review.html", **locals())
 
 
 @app.route("/bird.json")
