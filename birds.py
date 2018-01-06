@@ -79,6 +79,7 @@ def stats():
     if bird_review_count:
         review_bird = random_bird(birds_review_folder)
         bird_review_path = f"{request.url_root}review_birds/{review_bird}"
+        bird_review_size = f"{request.url_root}review_birds/{review_bird}"
         file_type_review = review_bird.split(".")[1]
 
         if file_type_review in video_extensions:
@@ -206,4 +207,4 @@ def bird():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
