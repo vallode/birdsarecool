@@ -2,6 +2,14 @@
 {% block body %}
 <div class="upload">
     <h2>{{ message }}</h2>
+    {% if options.bird_review_count %}
+    <p>
+        {{ options.bird_review_count }}
+        {% if options.bird_review_count > 1 %} birds are awaiting housing{% else %} bird is waiting for a home{% endif %}
+    </p>
+    {% else %}
+    <p>0 birds are waiting for a home!</p>
+    {% endif %}
 
     <form method="POST" enctype="multipart/form-data">
         <input type="file" id="file" name="file">
@@ -22,13 +30,5 @@
             })
         </script>
     </form>
-    {% if options.bird_review_count %}
-    <p>
-        {{ options.bird_review_count }}
-        {% if options.bird_review_count > 1 %} birds are awaiting housing{% else %} bird is waiting for a home{% endif %}
-    </p>
-    {% else %}
-        <p>0 birds are waiting for a home!</p>
-    {% endif %}
 </div>
 {% endblock %}

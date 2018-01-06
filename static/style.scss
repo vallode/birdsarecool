@@ -64,6 +64,10 @@ a {
 }
 
 form {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
 
     input[type="file"] {
         opacity: 0;
@@ -77,10 +81,10 @@ form {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        min-height: 1.5rem;
-        font-weight: bold;
+        flex: 1;
+        padding: 0 0 0 1vh;
+        margin: 0;
         word-break: break-all;
-        margin: 1vh 0 1vh 0;
         color: #282828;
         transition: all 0.25s ease;
 
@@ -94,6 +98,7 @@ form {
         outline: none;
         background-color: #b41b1d;
         padding: 1vh;
+        margin: 0;
         color: #f1f1f1;
 
         transition: all 0.25s ease;
@@ -154,6 +159,10 @@ main {
         li {
             margin: 0 1rem 0 0;
         }
+    }
+
+    .current {
+        color: #b41b1d;
     }
 }
 

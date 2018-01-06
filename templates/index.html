@@ -12,7 +12,7 @@
 <div class="info">
     <p>
         We currently house <span>{{ options.bird_count }}</span>
-        {% if options.bird_count > 1 %} birds! {% else %} very special bird! {% endif %}
+        {% if options.bird_count > 1 or options.bird_count == 0 %} birds! {% else %} very special bird! {% endif %}
     </p>
     <p>
         The birds eat <span>{% if options.storage_size == "0 bytes" %}nothing ;({% else %}{{ options.storage_size }}</span> of seed{% endif %}

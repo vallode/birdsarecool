@@ -13,11 +13,18 @@
 <body>
 <main>
     <div class="header">
+        {% if options.page_title == "index" %}
+        <a><h1>Birds are cool!</h1></a>
+        {% else %}
         <a href="{{ url_for('index') }}"><h1>Birds are cool!</h1></a>
+        {% endif %}
         <ul>
             <li><a href="{{ url_for('bird') }}">Bird.json</a></li>
-            <li><a href="https://github.com/vallode">Github</a></li>
+            {% if options.page_title == "upload" %}
+            <li><a class="current">Upload</a></li>
+            {% else %}
             <li><a href="{{ url_for('upload') }}">Upload</a></li>
+            {% endif %}
         </ul>
     </div>
     {% block body %}

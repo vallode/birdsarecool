@@ -14,7 +14,7 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 image_extensions = set(['png', 'jpg'])
-video_extensions = set(['mp4', 'webm'])
+video_extensions = set(['mp4', 'webm', 'gif'])
 allowed_extensions = set.union(image_extensions, video_extensions)
 
 
@@ -117,6 +117,7 @@ def page_not_found(e):
 @app.route("/", methods=["GET", "POST"])
 def index():
     options = stats()
+    options.update({'page_title': 'index'})
 
     return render_template("index.html", **locals())
 
@@ -134,6 +135,7 @@ def return_review_bird(path):
 @app.route("/upload", methods=["GET", "POST"])
 def upload():
     options = stats()
+    options.update({'page_title': 'upload'})
     if request.method == "POST":
         if "file" not in request.files:
             message = "No file found"
