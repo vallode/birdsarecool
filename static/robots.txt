@@ -1,0 +1,6 @@
+# I love bots
+User-agent: *
+Disallow: /review
+Crawl-delay: 5
+
+Sitemap: https://birdsare.cool/sitemap.xml

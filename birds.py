@@ -1,4 +1,4 @@
-from flask import Flask, abort, request, send_from_directory, render_template, redirect, jsonify, url_for, flash
+from flask import Flask, abort, request, make_response, send_from_directory, render_template, redirect, jsonify, url_for, flash
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from hurry.filesize import size, alternative
@@ -122,6 +122,12 @@ def stats():
 @app.errorhandler(404)
 def page_not_found(e):
     return 'Sorry, we could not find any birds for you!', 404
+
+
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def robots():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 
 @app.route("/", methods=["GET", "POST"])
