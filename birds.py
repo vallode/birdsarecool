@@ -127,7 +127,6 @@ def index():
 @app.route("/<path:path>", methods=['GET'])
 def return_bird(path):
     try:
-        path.close()
         return send_from_directory("static/birds", path.split("/")[-1])
     except:
         abort(404)
