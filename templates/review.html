@@ -4,7 +4,7 @@
     {% if options.bird_review_count > 0 %}
         <h2>{{ message }}</h2>
     {% if options.video_review %}
-        {% if options.file_type == 'gif' %}
+        {% if options.file_type_review == 'gif' %}
             <a href="{{ options.bird_review_path }}">
                 <img src="{{ options.bird_review_path }}" alt="bird animated image">
             </a>
