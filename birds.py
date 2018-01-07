@@ -59,8 +59,16 @@ def count_directory_size(path):
     return folder_size
 
 
-def random_bird(directory):
+def random_bird(directory, file_type=''):
     r = random.randrange(0, len(directory))
+
+    if file_type in allowed_extensions:
+        applicable = []
+        for file in directory:
+            if file.split(".")[-1] == file_type:
+                applicable.append(file)
+        r = random.randrange(0, len(applicable))
+        return applicable[r]
 
     return directory[r]
 
@@ -246,7 +254,7 @@ def bird():
     try:
         bird_object = {
             'status': 'Success',
-            'url': f"{request.url_root}{random_bird(birds_folder)}"
+            'url': f"{request.url_root}{random_bird(birds_folder, request.args.get('file'))}"
         }
         return jsonify(bird_object)
     except ValueError:
