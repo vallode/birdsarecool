@@ -3,6 +3,11 @@
 A tiny website made for the sole purpose of providing an api for random bird pictures.
 Yes.
 
+## Usage
+
+Api has one endpoint: `/bird.json`  
+It returns a json with a random bird url
+
 ## Local
 
 `git clone https://github.com/vallode/birdsarecool birdsarecool`  
