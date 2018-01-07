@@ -7,7 +7,7 @@
                 <img src="{{ options.bird_path }}" alt="bird animated image">
             </a>
         {% else %}
-        <video autoplay controls>
+        <video autoplay controls muted>
             <source src="{{ options.bird_path }}" type="video/{{ options.file_type }}">
         </video>
         {% endif %}
