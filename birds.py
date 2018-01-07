@@ -21,8 +21,8 @@ limiter = Limiter(
     default_limits=["4000 per day", "150 per hour"]
 )
 
-image_extensions = {'png', 'jpg'}
-video_extensions = {'mp4', 'webm'}
+image_extensions = {'png', 'jpg', 'jpeg'}
+video_extensions = {'mp4', 'webm', 'gif'}
 allowed_extensions = set.union(image_extensions, video_extensions)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False

@@ -2,13 +2,23 @@
 {% block body %}
 {% if options.bird_image_count > 0 %}
     {% if options.video %}
-        <video src="{{ options.bird_path }}" autoplay controls></video>
+        {% if options.file_type == 'gif' %}
+            <a href="{{ options.bird_path }}">
+                <img src="{{ options.bird_path }}" alt="bird animated image">
+            </a>
+        {% else %}
+        <video autoplay controls>
+            <source src="{{ options.bird_path }}" type="video/{{ options.file_type }}">
+        </video>
+        {% endif %}
     {% else %}
-        <a href="{{ options.bird_path }}"><img src="{{ options.bird_path }}" alt="bird image"></a>
+        <a href="{{ options.bird_path }}">
+            <img src="{{ options.bird_path }}" alt="bird image">
+        </a>
     {% endif %}
-{% else %}
-    <h2>We have no birds ;(</h2>
-{% endif %}
+    {% else %}
+        <h2>We have no birds ;(</h2>
+    {% endif %}
 <div class="info">
     <p>
         We currently house <span>{{ options.bird_count }}</span>
