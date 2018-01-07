@@ -12,4 +12,4 @@ Yes.
 
 You have to create a `secret.py` file with your hash and and tinypng API key
 
-Shoot me an [email](vallode@hotmail.co.uk) if you have any questions, or open an issue.
+Shoot me an [email](mailto:vallode@hotmail.co.uk) if you have any questions, or open an issue.
