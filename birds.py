@@ -262,7 +262,7 @@ def bird():
     try:
         bird_object = {
             'status': 'Success',
-            'url': f"{request.url_root}{random_bird(birds_folder, request.args.get('include'), request.args.get('exclude'))}"
+            'url': f"{request.url_root}{random_bird(birds_folder, request.args.get('only'), request.args.get('exclude'))}"
         }
         return jsonify(bird_object)
     except ValueError:

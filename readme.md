@@ -5,8 +5,13 @@ Yes.
 
 ## Usage
 
-Api has one endpoint: `/bird.json`  
-It returns a json with a random bird url
+`bird.json`
+
+Accepts arguments `only` and `exclude` followed by file extensions  
+Example:
+
+    https://birdsare.cool/bird.json?only=png,gif
+    https://birdsare.cool/bird.json?exclude=mp4
 
 It can accept the argument `file` set to whatever extension you want 
 as an example: `/birds.json?file=gif` will return only gif images from the archive
