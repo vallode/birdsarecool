@@ -123,11 +123,11 @@ def stats():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return 'Sorry, we could not find any birds for you!', 404
+    return "Sorry, we could not find any birds for you!", 404
 
 
-@app.route('/robots.txt')
-@app.route('/sitemap.xml')
+@app.route("/robots.txt")
+@app.route("/sitemap.xml")
 def robots():
     return send_from_directory(app.static_folder, request.path[1:])
 
@@ -140,7 +140,7 @@ def index():
     return render_template("index.html", **locals())
 
 
-@app.route("/<path:path>", methods=['GET'])
+@app.route("/<path:path>", methods=["GET"])
 def return_bird(path):
     try:
         return send_from_directory("static/birds", path)
@@ -150,7 +150,10 @@ def return_bird(path):
 
 @app.route("/review_birds/<path:path>", methods=['GET'])
 def return_review_bird(path):
-    return send_from_directory("review_birds/", path.split("/")[-1])
+    try:
+        return send_from_directory("review_birds/", path)
+    except:
+        abort(404)
 
 
 @app.route("/upload", methods=["POST"])
