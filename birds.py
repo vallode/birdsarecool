@@ -134,9 +134,7 @@ def robots():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    print(url_for('index'))
     options = stats()
-    options.update({'page_title': 'index'})
 
     return render_template("index.html", **locals())
 
