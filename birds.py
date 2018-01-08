@@ -134,6 +134,7 @@ def robots():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    print(url_for('index'))
     options = stats()
     options.update({'page_title': 'index'})
 
@@ -143,7 +144,7 @@ def index():
 @app.route("/<path:filename>", methods=["GET"])
 def return_bird(filename):
     try:
-        return send_from_directory("static", filename)
+        return send_from_directory(app.static_folder, filename)
     except:
         pass
     try:
