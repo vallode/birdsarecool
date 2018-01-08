@@ -26,6 +26,7 @@ video_extensions = {'mp4', 'webm', 'gif'}
 allowed_extensions = set.union(image_extensions, video_extensions)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+app.config['USE_X_SENDFILE'] = True
 
 
 def count_directory(path):
@@ -138,14 +139,6 @@ def index():
     options.update({'page_title': 'index'})
 
     return render_template("index.html", **locals())
-
-
-@app.route("/<path:path>", methods=['GET'])
-def return_bird(path):
-    try:
-        return send_from_directory("static/birds", path.split("/")[-1])
-    except:
-        abort(404)
 
 
 @app.route("/review_birds/<path:path>", methods=['GET'])
