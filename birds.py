@@ -140,6 +140,14 @@ def index():
     return render_template("index.html", **locals())
 
 
+@app.route("/<path:path>", methods=['GET'])
+def return_bird(path):
+    try:
+        return send_from_directory("static/birds", path.split("/")[-1])
+    except:
+        abort(404)
+
+
 @app.route("/review_birds/<path:path>", methods=['GET'])
 def return_review_bird(path):
     return send_from_directory("review_birds/", path.split("/")[-1])
