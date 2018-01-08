@@ -26,7 +26,7 @@ video_extensions = {'mp4', 'webm', 'gif'}
 allowed_extensions = set.union(image_extensions, video_extensions)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
-app.config['USE_X_SENDFILE'] = False
+app.config['USE_X_SENDFILE'] = True
 
 
 def count_directory(path):
