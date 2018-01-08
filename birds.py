@@ -143,7 +143,7 @@ def index():
 @app.route("/<path:path>", methods=['GET'])
 def return_bird(path):
     try:
-        return send_from_directory("static/birds", path.split("/")[-1])
+        return send_from_directory("static/birds", path)
     except:
         abort(404)
 
