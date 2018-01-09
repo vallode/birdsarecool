@@ -151,6 +151,23 @@ main {
     flex-direction: column;
     margin: 0 0 1.5rem 0;
 
+    a {
+        position: relative;
+    }
+
+    img {
+        position: absolute;
+        top: 0;
+        left: -86px;
+
+        width: 76px;
+        height: 76px;
+
+        @media screen and (max-width: 500px) {
+            display: none;
+        }
+    }
+
     ul {
         display: flex;
         flex-wrap: wrap;

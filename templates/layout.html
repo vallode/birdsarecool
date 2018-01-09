@@ -33,9 +33,10 @@
     {% endblock %}
 </head>
 <body>
+
 <main>
     <div class="header">
-        <a href="{{ url_for('index') }}"><h1>Birds are cool!</h1></a>
+        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='birb.png') }}" alt=""><h1>Birds are cool!</h1></a>
         <ul>
             <li><a href="{{ url_for('bird') }}">Bird.json</a></li>
             {% if options.page_title == "upload" %}
