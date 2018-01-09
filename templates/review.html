@@ -1,4 +1,24 @@
 {% extends "layout.html" %}
+{% block head %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Birds are cool!</title>
+<meta name="description" content="Birds are cool! Your one stop shop for a bird api">
+<meta property='og:image' content='{{ url_for("static", filename="birb.png") }}'>
+<meta property='og:title' content='Birds are cool!'>
+<meta property=og:locale content='en_US'>
+<meta name='author' content='Mariusz Zarzycki'>
+<meta name='description' content='Birds are cool! Your one stop shop for a bird api'>
+<meta property='og:description' content='For all your random bird needs'>
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@Vallode_">
+<meta name="twitter:creator" content="@Mariusz Zarzycki">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='birb.png') }}">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans|Dosis:400,800" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block body %}
 <div class="review">
     {% if options.bird_review_count > 0 %}

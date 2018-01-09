@@ -261,10 +261,7 @@ def bird():
         }
         return jsonify(bird_object)
     except ValueError:
-        bird_object = {
-            'status': 'Failed',
-        }
-        return jsonify(bird_object)
+        return jsonify({'status': 'Failed'})
 
 
 if __name__ == '__main__':
