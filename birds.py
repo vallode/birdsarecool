@@ -128,6 +128,7 @@ def page_not_found(e):
 
 @app.route("/robots.txt")
 @app.route("/sitemap.xml")
+@app.route("/favicon.ico")
 def robots():
     return send_from_directory(app.static_folder, request.path[1:])
 
