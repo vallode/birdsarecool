@@ -10,18 +10,24 @@ html {
 }
 
 body {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1;
     background-color: #f1f1f1;
     color: #282828;
     font-size: 16px;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
     margin: 0;
     padding: 0;
+}
+
+main {
+    flex: 1;
 }
 
 h1 {
@@ -42,9 +48,7 @@ h2 {
 }
 
 p, a, input, form {
-    font-family: 'Open Sans', sans-serif;
     font-size: 1rem;
-    line-height: 1rem;
     margin: 0 0 0.5rem 0;
 }
 
@@ -58,17 +62,10 @@ a {
     }
 }
 
-.upload {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 form {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    justify-content: center;
 
     input[type="file"] {
         opacity: 0;
