@@ -81,7 +81,7 @@ p, a, input, form {
 main {
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 1fr;
 
     position: relative;
 
@@ -163,6 +163,10 @@ main {
                 max-width: 100%;
                 padding: 1rem;
             }
+        }
+
+        .info {
+            padding: 1rem;
         }
     }
 
