@@ -142,6 +142,8 @@ main {
 
         .logo {
             height: 64px;
+            padding: 0.5rem;
+            margin: 0;
         }
 
         .title h1 {
@@ -189,7 +191,7 @@ p, a, input, form {
 }
 
 a {
-color: #485F6E;
+    color: #485F6E;
 }
 
 form {
