@@ -3,16 +3,16 @@
 {% if options.bird_image_count > 0 %}
     {% if options.video %}
         {% if options.file_type == 'gif' %}
-            <a href="{{ options.bird_path }}">
+            <a class="media" href="{{ options.bird_path }}">
                 <img src="{{ options.bird_path }}" alt="bird animated image">
             </a>
         {% else %}
-        <video autoplay controls muted>
+        <video class="media" autoplay controls muted>
             <source src="{{ options.bird_path }}" type="video/{{ options.file_type }}">
         </video>
         {% endif %}
     {% else %}
-        <a href="{{ options.bird_path }}">
+        <a class="media" href="{{ options.bird_path }}">
             <img src="{{ options.bird_path }}" alt="bird image">
         </a>
     {% endif %}

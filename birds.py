@@ -1,4 +1,5 @@
-from flask import Flask, abort, request, make_response, send_from_directory, render_template, redirect, jsonify, url_for, flash
+from flask import Flask, abort, request, make_response, send_from_directory, render_template, redirect, jsonify, \
+    url_for, flash
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from hurry.filesize import size, alternative
@@ -250,8 +251,24 @@ def review_get():
     return render_template("review.html", **locals())
 
 
+@app.route("/privacy")
+def privacy():
+    options = stats()
+    options.update({'page_title': 'privacy'})
+
+    return render_template("privacy.html", **locals())
+
+
+@app.route("/about")
+def about():
+    options = stats()
+    options.update({'page_title': 'about'})
+
+    return render_template("about.html", **locals())
+
+
 @app.route("/bird.json")
-@limiter.limit("500 per hour", error_message="The birds are resting!)")
+@limiter.limit("500 per hour", error_message="The birds are resting!")
 def bird():
     birds_folder = os.listdir("static/birds")
     try:

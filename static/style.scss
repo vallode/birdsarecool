@@ -1,33 +1,169 @@
-* {
-    box-sizing: border-box;
-}
+@charset "UTF-8";
 
-html {
-    height: 100%;
+// SCSS variables
+$foreground: #282828;
+$background: #f1f1f1;
 
-    margin: 0;
+// Basics
+html,
+body {
     padding: 0;
+    margin: 0;
+
+    height: 100%;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
-    line-height: 1;
-    background-color: #f1f1f1;
-    color: #282828;
-    font-size: 16px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    flex-flow: column wrap;
 
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100%;
+    justify-items: center;
 
-    margin: 0;
-    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+
+    background: $background;
+    color: $foreground;
+
+    box-sizing: border-box;
 }
 
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+// Typography
+h1 {
+    font-family: 'Dosis', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+
+    color: #282828;
+    margin: 0;
+}
+
+h2 {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    margin: 0 0 0.5rem 0;
+}
+
+ul {
+    display: flex;
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+
+    &:hover {
+        color: darken(#485F6E, 50%);
+    }
+}
+
+p, a, input, form {
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+}
+
+
+// Layout
 main {
-    flex: 1;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
+
+    position: relative;
+
+    align-items: center;
+
+    .logo {
+        height: 128px;
+        padding: 1rem;
+        grid-column: 1/2;
+        grid-row: 1/3;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    .media {
+        position: relative;
+        max-width: 420px;
+
+        img {
+            height: 420px;
+            width: auto;
+        }
+
+        video {
+            height: 420px;
+            width: auto;
+        }
+    }
+
+    .title {
+        margin: 0;
+        align-self: flex-end;
+        grid-row: 1/2;
+    }
+
+    nav {
+        color: #485F6E;
+        align-self: flex-start;
+        grid-row: 2/3;
+
+        .current {
+            color: #b41b1d;
+        }
+    }
+
+    section {
+        grid-column: 2/3;
+        grid-row: 3/4;
+    }
+
+    .text {
+        max-width: 350px;
+    }
+
+    @media screen and (max-width: 900px) {
+
+        .logo {
+            height: 64px;
+        }
+
+        .title h1 {
+            font-size: 2rem;
+        }
+
+        section {
+            grid-column: 1/3;
+        }
+    }
+
+    span {
+        color: #b41b1d;
+    }
+}
+
+footer {
+    align-self: flex-end;
+
+    padding: 1rem;
+
+    color: #485F6E;
 }
 
 h1 {
@@ -53,13 +189,7 @@ p, a, input, form {
 }
 
 a {
-    text-decoration: none;
-    color: #485F6E;
-    transition: all 0.25s ease;
-
-    &:hover {
-        color: darken(#485F6E, 30%);
-    }
+color: #485F6E;
 }
 
 form {
@@ -87,7 +217,7 @@ form {
         transition: all 0.25s ease;
 
         &:hover {
-            color: #9C1A1C;
+            color: #b41b1d;
         }
     }
 
@@ -104,82 +234,6 @@ form {
         &:hover {
             background-color: darken(#b41b1d, 5%);
         }
-    }
-}
-
-main {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: center;
-
-    margin: 2vh;
-    max-width: 500px;
-    min-width: 280px;
-    min-height: 256px;
-
-    span {
-        color: #b41b1d;
-        font-weight: bold;
-    }
-
-    .info {
-        margin: 1rem 0 1rem 0;
-    }
-
-    img {
-        width: 100%;
-        height: auto;
-    }
-
-    video {
-        width: 100%;
-        height: auto;
-    }
-
-    .media {
-        display: flex;
-        flex-wrap: wrap;
-    }
-}
-
-.header {
-    display: flex;
-    flex-direction: column;
-    margin: 0 0 1.5rem 0;
-
-    a {
-        position: relative;
-    }
-
-    img {
-        position: absolute;
-        top: 0;
-        left: -86px;
-
-        width: 76px;
-        height: 76px;
-
-        @media screen and (max-width: 500px) {
-            display: none;
-        }
-    }
-
-    ul {
-        display: flex;
-        flex-wrap: wrap;
-
-        list-style: none;
-        padding: 0 0 0 0;
-        margin: 0 0 0 0;
-
-        li {
-            margin: 0 1rem 0 0;
-        }
-    }
-
-    .current {
-        color: #b41b1d;
     }
 }
 

@@ -35,24 +35,42 @@
 <body>
 
 <main>
-    <div class="header">
-        <a href="{{ url_for('index') }}"><img src="{{ url_for('static', filename='birb.png') }}" alt=""><h1>Birds are cool!</h1></a>
-        <ul>
-            <li><a href="{{ url_for('bird') }}">Bird.json</a></li>
-            {% if options.page_title == "upload" %}
-            <li><a class="current">Upload</a></li>
-            {% else %}
-            <li><a href="{{ url_for('upload') }}">Upload</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    {% block body %}
-    {% endblock %}
+    <a class="logo" href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='birb.png') }}" alt="">
+    </a>
+    <a href="{{ url_for('index') }}" class="title"><h1>Birds are: Cool!</h1></a>
+    <nav>
+        {% if options.page_title == "upload" %}
+            <a class="current">Upload</a>
+        {% else %}
+            <a href="{{ url_for('upload') }}">Upload</a>
+        {% endif %}
+
+        {% if options.page_title == "privacy" %}
+            <a class="current">Privacy</a>
+        {% else %}
+            <a href="{{ url_for('privacy') }}">Privacy</a>
+        {% endif %}
+
+        {% if options.page_title == "about" %}
+            <a class="current">About</a>
+        {% else %}
+            <a href="{{ url_for('about') }}">About</a>
+        {% endif %}
+
+        <a href="{{ url_for('bird') }}">Bird.json</a>
+
+    </nav>
+    <section>
+        {% block body %}
+        {% endblock %}
+    </section>
 </main>
+
 <footer>
     <ul>
-        <li><a href="https://github.com/vallode" target="_blank" rel="noopener">Github</a></li>
-        <li><a href="https://twitter.com/Vallode_" target="_blank" rel="noopener">@vallode_</a></li>
+        <li><a href="https://github.com/vallode" target="_blank">Github</a></li>
+        <li><a href="https://twitter.com/Vallode_" target="_blank">@vallode_</a></li>
     </ul>
 </footer>
 </body>
