@@ -38,7 +38,7 @@
     <a class="logo" href="{{ url_for('index') }}">
         <img src="{{ url_for('static', filename='birb.png') }}" alt="">
     </a>
-    <a href="{{ url_for('index') }}" class="title"><h1>Birds are: Cool!</h1></a>
+    <a href="{{ url_for('index') }}" class="title"><h1>Birds are cool!</h1></a>
     <nav>
         {% if options.page_title == "upload" %}
             <a class="current">Upload</a>
@@ -59,7 +59,6 @@
         {% endif %}
 
         <a href="{{ url_for('bird') }}">Bird.json</a>
-
     </nav>
     <section>
         {% block body %}
@@ -73,5 +72,6 @@
         <li><a href="https://twitter.com/Vallode_" target="_blank">@vallode_</a></li>
     </ul>
 </footer>
+
 </body>
 </html>

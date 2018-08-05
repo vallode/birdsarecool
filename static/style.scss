@@ -4,6 +4,8 @@
 $foreground: #282828;
 $background: #f1f1f1;
 
+$red: #b41b1d;
+
 // Basics
 html,
 body {
@@ -16,7 +18,6 @@ body {
 body {
     display: grid;
     grid-template-rows: 1fr auto;
-    flex-flow: column wrap;
 
     align-items: center;
     justify-items: center;
@@ -35,17 +36,21 @@ body {
 }
 
 // Typography
-h1 {
+
+h1,
+h2 {
     font-family: 'Dosis', sans-serif;
+}
+
+h1 {
     font-size: 3rem;
     font-weight: 400;
 
-    color: #282828;
+    color: $foreground;
     margin: 0;
 }
 
 h2 {
-    font-family: 'Dosis', sans-serif;
     font-weight: 600;
     font-size: 1.3rem;
     line-height: 1.3rem;
@@ -67,23 +72,28 @@ a {
     transition: all 0.2s ease;
 
     &:hover {
-        color: darken(#485F6E, 50%);
+        color: $red;
     }
 }
 
 p, a, input, form {
     font-size: 1rem;
+}
+
+p {
     margin: 0 0 0.5rem 0;
 }
 
 
 // Layout
+
 main {
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto 1fr;
     grid-template-columns: auto 1fr;
 
     position: relative;
+    left: -64px;
 
     align-items: center;
 
@@ -129,15 +139,19 @@ main {
     }
 
     section {
-        grid-column: 1/3;
+        grid-column: 2/3;
         grid-row: 3/4;
     }
 
     .text {
+        text-align: justify;
         max-width: 350px;
     }
 
     @media screen and (max-width: 900px) {
+
+        left: 0;
+        min-width: 100%;
 
         .logo {
             height: 64px;
@@ -151,26 +165,34 @@ main {
         }
 
         section {
-            justify-self: center;
-            margin: 0.5rem 0;
+            display: flex;
+            flex-direction: column;
             grid-column: 1/3;
         }
 
         .media {
+            align-self: center;
+            padding: 1rem 0;
+
             img {
                 height: auto;
                 max-width: 100%;
-                padding: 1rem;
+                padding: 0 1rem;
             }
         }
 
         .info {
-            padding: 1rem;
+            padding: 0 1rem;
+        }
+
+        .text {
+            padding: 1rem 0;
+            align-self: center;
         }
     }
 
     span {
-        color: #b41b1d;
+        color: $red;
     }
 }
 
@@ -181,29 +203,6 @@ footer {
 
     color: #485F6E;
 }
-
-h1 {
-    font-family: 'Dosis', sans-serif;
-    color: #282828;
-    font-weight: 400;
-    line-height: 3rem;
-    font-size: 3rem;
-    margin: 0 0 0 0;
-}
-
-h2 {
-    font-family: 'Dosis', sans-serif;
-    font-weight: 800;
-    font-size: 1.3rem;
-    line-height: 1.3rem;
-    margin: 0 0 0.5rem 0;
-}
-
-p, a, input, form {
-    font-size: 1rem;
-    margin: 0 0 0.5rem 0;
-}
-
 a {
     color: #485F6E;
 }
@@ -229,26 +228,26 @@ form {
         padding: 0 0 0 1vh;
         margin: 0;
         word-break: break-all;
-        color: #282828;
+        color: $foreground;
         transition: all 0.25s ease;
 
         &:hover {
-            color: #b41b1d;
+            color: $red;
         }
     }
 
     input[type="submit"] {
         border: none;
         outline: none;
-        background-color: #b41b1d;
+        background-color: $red;
         padding: 1vh;
         margin: 0;
-        color: #f1f1f1;
+        color: $background;
 
         transition: all 0.25s ease;
 
         &:hover {
-            background-color: darken(#b41b1d, 5%);
+            background-color: darken($red, 5%);
         }
     }
 }
@@ -291,6 +290,7 @@ form {
 
 footer {
     padding: 1vh;
+
     ul {
         display: flex;
 

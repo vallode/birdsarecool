@@ -1,11 +1,11 @@
 # Birds are cool
 
-A tiny website made for the sole purpose of providing an api for random bird pictures.
-Yes.
+A flask-powered website made for the sole purpose of distributing 
+bird pictures through an api
 
-## Usage
+## API
 
-`bird.json`
+`https://birdsare.cool/bird.json`
 
 Accepts arguments `only` and `exclude` followed by file extensions  
 Example:
@@ -13,9 +13,15 @@ Example:
     https://birdsare.cool/bird.json?only=png,gif
     https://birdsare.cool/bird.json?exclude=mp4
 
-## Local
+## Development
 
-`git clone https://github.com/vallode/birdsarecool birdsarecool`  
+`git clone https://github.com/vallode/birdsarecool`  
+
+Create your virtual environment:  
+`virtualenv -p /usr/bin/python3 env/`
+
+Running the app is simple:  
+`env FLASK_APP=birds.py FLASK_DEBUG=True flask run`
 
 The app requires three things to set up:  
 `static/birds` folder  
